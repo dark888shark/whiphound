@@ -1,173 +1,158 @@
-/* ============================================================
-   script.js
-   Здесь собрана вся логика:
-   1) Плавный скролл по якорям
-   2) Анимация появления секций при прокрутке
-   3) Подсветка активного пункта меню
-   4) Работа карусели (фотогалереи)
-   5) Куки-баннер
-   ============================================================ */
+/**
+ * main.js
+ * Здесь собран "расширенный, но понятный" JavaScript:
+ * 1) Карусель галереи
+ * 2) Плавный скролл по якорям меню
+ * 3) Валидация формы и сообщение о статусе
+ * 4) Куки-баннер (сохранение согласия в localStorage)
+ */
 
-document.addEventListener("DOMContentLoaded", () => {
-  // ----------------------------------------------------------
-  // 1. ПЛАВНЫЙ СКРОЛЛ ПО ЯКОРНЫМ ССЫЛКАМ
-  // ----------------------------------------------------------
-  const internalLinks = document.querySelectorAll('a[href^="#"]');
+/* ============================
+   1. КАРУСЕЛЬ ГАЛЕРЕИ
+   ============================ */
 
-  internalLinks.forEach((link) => {
-    link.addEventListener("click", (event) => {
-      const href = link.getAttribute("href");
+(function setupGalleryCarousel() {
+  const items = Array.from(document.querySelectorAll(".gallery-item"));
+  const prevBtn = document.querySelector(".gallery-prev");
+  const nextBtn = document.querySelector(".gallery-next");
 
-      // Если ссылка вида "#about" и элемент с таким id есть на странице —
-      // плавно прокручиваем к нему.
-      if (href && href.startsWith("#") && href.length > 1) {
-        const targetId = href.substring(1); // отрезаем # -> "about"
-        const targetElement = document.getElementById(targetId);
+  if (!items.length) return;
 
-        if (targetElement) {
-          event.preventDefault();
-          targetElement.scrollIntoView({ behavior: "smooth" });
-        }
-      }
+  let currentIndex = 0;
+
+  function updateActiveSlide() {
+    items.forEach((item, index) => {
+      item.classList.toggle("active", index === currentIndex);
+    });
+  }
+
+  function showNext() {
+    currentIndex = (currentIndex + 1) % items.length;
+    updateActiveSlide();
+  }
+
+  function showPrev() {
+    currentIndex = (currentIndex - 1 + items.length) % items.length;
+    updateActiveSlide();
+  }
+
+  prevBtn?.addEventListener("click", showPrev);
+  nextBtn?.addEventListener("click", showNext);
+
+  // Автопрокрутка раз в 6 секунд (можно отключить)
+  setInterval(showNext, 6000);
+})();
+
+/* ============================
+   2. ПЛАВНЫЙ СКРОЛЛ ДЛЯ МЕНЮ
+   ============================ */
+
+(function setupSmoothScroll() {
+  const links = document.querySelectorAll('a[href^="#"]');
+
+  links.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const targetId = link.getAttribute("href");
+      if (!targetId || targetId === "#") return;
+
+      const targetElement = document.querySelector(targetId);
+      if (!targetElement) return;
+
+      e.preventDefault();
+
+      const headerOffset = 70; // высота фиксированной шапки
+      const rect = targetElement.getBoundingClientRect();
+      const offsetTop = window.scrollY + rect.top - headerOffset;
+
+      window.scrollTo({
+        top: offsetTop,
+        behavior: "smooth",
+      });
     });
   });
+})();
 
-  // ----------------------------------------------------------
-  // 2. АНИМАЦИЯ СЕКЦИЙ + ПОДСВЕТКА АКТИВНОГО ПУНКТА МЕНЮ
-  // ----------------------------------------------------------
-  const sections = document.querySelectorAll("section[id]"); // берем только секции с id
-  const navLinks = document.querySelectorAll(".nav a");
+/* ============================
+   3. ВАЛИДАЦИЯ ФОРМЫ
+   ============================ */
 
-  // Для начала задаём базовое состояние: секции спрятаны и чуть сдвинуты вниз.
-  sections.forEach((section) => {
-    section.style.opacity = "0";
-    section.style.transform = "translateY(30px)";
-    section.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+(function setupContactForm() {
+  const form = document.getElementById("contactForm");
+  if (!form) return;
+
+  const statusBox = document.getElementById("formStatus");
+
+  function setError(fieldId, message) {
+    const errorBox = document.querySelector(
+      `.input-error[data-error-for="${fieldId}"]`
+    );
+    if (errorBox) errorBox.textContent = message || "";
+  }
+
+  form.addEventListener("submit", function (e) {
+    // Базовая проверка полей
+    const name = form.querySelector("#name");
+    const phone = form.querySelector("#phone");
+    const message = form.querySelector("#message");
+
+    let hasError = false;
+    setError("name", "");
+    setError("phone", "");
+    setError("message", "");
+
+    if (!name.value.trim()) {
+      setError("name", "Введите ваше имя");
+      hasError = true;
+    }
+    if (!phone.value.trim()) {
+      setError("phone", "Укажите номер телефона");
+      hasError = true;
+    }
+    if (!message.value.trim()) {
+      setError("message", "Напишите хотя бы пару слов 🙂");
+      hasError = true;
+    }
+
+    if (hasError) {
+      e.preventDefault();
+      statusBox.textContent = "Проверьте, пожалуйста, выделенные поля.";
+      statusBox.style.color = "#ff6b6b";
+      return;
+    }
+
+    // Если всё ОК — даём пользователю понятный отклик.
+    // Здесь можно либо:
+    // 1) дать форме отправиться как обычно (formsubmit сам всё сделает),
+    // 2) либо перехватить и отправить через fetch.
+    //
+    // Для простоты учебного задания оставим вариант №1.
+
+    statusBox.textContent = "Отправляем сообщение...";
+    statusBox.style.color = "#b3b3b3";
+    // дальше форма отправится стандартным способом (e.preventDefault мы НЕ вызываем)
   });
+})();
 
-  // Функция подсветки активного пункта меню
-  function highlightNav(id) {
-    navLinks.forEach((link) => {
-      const href = link.getAttribute("href");
-      if (href === `#${id}`) {
-        // Активный пункт — красим в teal и даем свечение
-        link.style.color = "#17c9b4";
-        link.style.textShadow = "0 0 10px rgba(23,201,180,0.8)";
-      } else {
-        // Остальные возвращаем к стилям по умолчанию из CSS
-        link.style.color = "";
-        link.style.textShadow = "";
-      }
-    });
+/* ============================
+   4. COOKIES-БАННЕР
+   ============================ */
+
+(function setupCookieBanner() {
+  const banner = document.getElementById("cookieBanner");
+  const acceptBtn = document.getElementById("cookieAcceptBtn");
+  if (!banner || !acceptBtn) return;
+
+  const STORAGE_KEY = "whiphound_cookies_accepted";
+
+  // Если пользователь уже соглашался — баннер не показываем
+  const alreadyAccepted = localStorage.getItem(STORAGE_KEY);
+  if (alreadyAccepted === "yes") {
+    banner.classList.add("hidden");
+    return;
   }
 
-  // IntersectionObserver следит, какая секция сейчас видима на экране
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        const section = entry.target;
-        const id = section.getAttribute("id");
-
-        if (entry.isIntersecting) {
-          // Когда секция попала в зону видимости — плавно отображаем её
-          section.style.opacity = "1";
-          section.style.transform = "translateY(0)";
-
-          // И подсвечиваем соответствующий пункт меню
-          if (id) highlightNav(id);
-        }
-      });
-    },
-    {
-      threshold: 0.35, // Секция считается активной, когда примерно на 35% видна
-    }
-  );
-
-  // Подключаем наблюдение за каждой секцией
-  sections.forEach((section) => observer.observe(section));
-
-  // ----------------------------------------------------------
-  // 3. КАРУСЕЛЬ (ФОТОГАЛЕРЕЯ)
-  // ----------------------------------------------------------
-  const carouselTrack = document.querySelector(".carousel-track");
-  const carouselSlides = document.querySelectorAll(".carousel-img");
-  const prevBtn = document.querySelector(".carousel-btn.prev");
-  const nextBtn = document.querySelector(".carousel-btn.next");
-
-  let currentSlide = 0;
-
-  // Если галерея есть на странице, настраиваем её
-  if (carouselTrack && carouselSlides.length > 0) {
-    // Добавляем плавное смещение
-    carouselTrack.style.transition = "transform 0.5s ease";
-
-    // Функция показа конкретного слайда по индексу
-    function showSlide(index) {
-      const slideWidth = carouselSlides[0].clientWidth + 20; // ширина + отступ (gap ≈ 20px)
-      const total = carouselSlides.length;
-
-      // Зацикливаем индексы: -1 -> последний, последний+1 -> 0
-      if (index < 0) index = total - 1;
-      if (index >= total) index = 0;
-      currentSlide = index;
-
-      const offset = -currentSlide * slideWidth;
-      carouselTrack.style.transform = `translateX(${offset}px)`;
-    }
-
-    // Обработчики кнопок влево/вправо
-    if (prevBtn) {
-      prevBtn.addEventListener("click", () => {
-        showSlide(currentSlide - 1);
-      });
-    }
-
-    if (nextBtn) {
-      nextBtn.addEventListener("click", () => {
-        showSlide(currentSlide + 1);
-      });
-    }
-
-    // Автоматическая прокрутка каждые 5 секунд
-    setInterval(() => {
-      showSlide(currentSlide + 1);
-    }, 5000);
-
-    // При загрузке страницы показываем первый слайд
-    showSlide(0);
-
-    // На всякий случай пересчитываем ширину при изменении размера окна
-    window.addEventListener("resize", () => {
-      showSlide(currentSlide);
-    });
-  }
-
-  // ----------------------------------------------------------
-  // 4. COOKIE-БАННЕР
-  // ----------------------------------------------------------
-  const cookieBanner = document.getElementById("cookieBanner");
-  const cookieAcceptBtn = document.getElementById("cookieAccept");
-
-  // Ключ в localStorage, чтобы помнить, что пользователь уже согласился
-  const COOKIE_KEY = "whiphound_cookies_accepted";
-
-  // Функция показа баннера (если ещё не принимали)
-  function maybeShowCookieBanner() {
-    const accepted = localStorage.getItem(COOKIE_KEY);
-    if (!accepted && cookieBanner) {
-      cookieBanner.style.display = "block";
-    }
-  }
-
-  // При клике — сохраняем флаг в localStorage и скрываем баннер
-  if (cookieAcceptBtn && cookieBanner) {
-    cookieAcceptBtn.addEventListener("click", () => {
-      localStorage.setItem(COOKIE_KEY, "yes");
-      cookieBanner.style.display = "none";
-    });
-  }
-
-  // Показываем баннер при первой загрузке (если пользователь ещё не принимал)
-  maybeShowCookieBanner();
-});
-
+  acceptBtn.addEventListener("click", () => {
+    localStorage.setItem(STORAGE_KEY, "yes");
+    banner.classList.add("hidden");
+  });
+})();
