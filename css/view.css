@@ -1,83 +1,374 @@
+/*  
+====================================================
+WHIPHOUND — PREMIUM STYLE
+Структура:
+1. Переменные и базовые настройки
+2. Глобальные правила
+3. Header + лого
+4. Hero-секция (заголовок + борзая)
+5. Buttons (teal-hover)
+6. О проекте (карточка)
+7. Галерея / Карусель
+8. Контактная форма
+9. Footer
+10. Cookie-banner
+11. Адаптив
+====================================================
+*/
+
+/* -------------------------------------------------
+   1. ПЕРЕМЕННЫЕ
+------------------------------------------------- */
+:root {
+  --bg-top: #111111;
+  --bg-bottom: #2a2a2a;
+  --text-main: #f5f5f5;
+  --text-muted: #a9a9a9;
+  --accent: #00c7be;
+  --accent-glow: rgba(0, 199, 190, 0.45);
+  --border-soft: #303030;
+  --card-bg: rgba(18, 18, 18, 0.92);
+  --error: #ff4d4d;
+}
+
+/* -------------------------------------------------
+   2. ГЛОБАЛЬНЫЕ НАСТРОЙКИ
+------------------------------------------------- */
 body {
-  background-color: #f8f9fa;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0;
+  color: var(--text-main);
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+  background-attachment: fixed;
 }
 
-/* Фото */
-.about-photo {
-  max-height: 260px;
-  object-fit: cover;
+section {
+  padding: 90px 0;
 }
 
-/* Блок "О проекте" в рамке */
-.about-box {
-  background-color: #ffffff;
-  border-radius: 16px;
-  border: 1px solid #e5e7eb;
-  padding: 24px 24px 20px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-/* Карточки преимуществ */
-.feature-card {
-  border: none;
-  border-radius: 18px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-  background: #ffffff;
+.wh-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 16px;
 }
 
-.feature-card.red {
-  border-top: 4px solid #dc3545;
+/* -------------------------------------------------
+   3. HEADER
+------------------------------------------------- */
+.wh-header {
+  padding: 26px 0;
 }
 
-.feature-card.green {
-  border-top: 4px solid #198754;
+.wh-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.feature-card.blue {
-  border-top: 4px solid #0d6efd;
+.wh-logo__img {
+  height: 48px;
+  /* Мягкое свечение логотипа */
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.25));
 }
 
-/* Чуть аккуратнее кнопки-соцсети */
-header .btn {
-  font-size: 0.95rem;
+.wh-logo__text {
+  font-family: "Playfair Display", serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: .5px;
 }
 
-/* На маленьких экранах — чуть меньше отступов */
-@media (max-width: 576px) {
-  main.container {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-  }
+.wh-nav {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
 
-  /* Галерея */
-.gallery-img {
+.wh-nav a {
+  color: var(--text-muted);
+  font-size: 14px;
+  transition: .2s ease;
+}
+
+.wh-nav a:hover {
+  color: var(--accent);
+  text-shadow: 0 0 6px var(--accent-glow);
+}
+
+/* -------------------------------------------------
+   4. HERO SECTION
+------------------------------------------------- */
+.wh-hero-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 40px;
+}
+
+.wh-hero-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(44px, 5vw, 60px);
+  margin-bottom: 16px;
+}
+
+.wh-hero-subtitle {
+  font-size: 18px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.wh-hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Борзая */
+.wh-hero-dog-wrapper {
+  position: relative;
+  max-width: 620px;
+  margin-left: auto;
+}
+
+.wh-hero-dog-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 30% 50%,
+    rgba(0, 199, 190, 0.6),
+    transparent 60%
+  );
+  filter: blur(45px);
+  z-index: 1;
+}
+
+.wh-hero-dog {
   width: 100%;
-  height: 260px;          /* одинаковая высота у всех фото */
-  object-fit: cover;      /* обрезка без искажений */
-  border-radius: 10px;
+  position: relative;
+  z-index: 2;
+  filter: 
+    drop-shadow(0 0 25px rgba(0, 199, 190, 0.75))
+    saturate(1.15)
+    contrast(1.1);
+}
+
+/* -------------------------------------------------
+   5. BUTTONS
+------------------------------------------------- */
+.wh-btn {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  background: #151515;
+  color: var(--text-main);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: .25s ease;
 }
 
-.gallery-img:hover {
-  transform: scale(1.03);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-}
-.row.g-4 > div {
-  padding: 10px;
-}
-@media (max-width: 576px) {
-  .gallery-img {
-    height: 200px;
-  }
-@media (max-width: 576px) {
-  .gallery-img {
-    height: 200px;
-  }
+.wh-btn-outline {
+  background: transparent;
 }
 
-  .about-box {
-    padding: 18px;
+.wh-btn-main {
+  background: radial-gradient(circle at 0 0, var(--accent-glow), #111);
+  border-color: rgba(0, 199, 190, .5);
+}
+
+.wh-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: 0 0 14px var(--accent-glow);
+  color: var(--accent);
+}
+
+/* -------------------------------------------------
+   6. ABOUT
+------------------------------------------------- */
+.wh-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-soft);
+  padding: 28px;
+  border-radius: 18px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.wh-section-title {
+  font-family: "Playfair Display", serif;
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 38px;
+}
+
+.wh-card p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.wh-card-quote {
+  border-left: 3px solid var(--accent);
+  padding-left: 12px;
+  margin-top: 16px;
+  color: #bdf7f4;
+}
+
+/* -------------------------------------------------
+   7. GALLERY / CAROUSEL
+------------------------------------------------- */
+.wh-gallery-wrapper {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.wh-carousel {
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, .6);
+}
+
+.wh-carousel img {
+  object-fit: cover;
+  height: 340px;
+}
+
+.carousel-indicators [data-bs-target] {
+  background-color: var(--accent);
+}
+
+.wh-gallery-caption {
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.wh-middle-actions {
+  margin-top: 42px;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+/* -------------------------------------------------
+   8. CONTACT FORM
+------------------------------------------------- */
+.wh-form-card {
+  background: var(--card-bg);
+  padding: 28px;
+  border-radius: 18px;
+  border: 1px solid var(--border-soft);
+}
+
+.wh-form-input,
+.wh-form-textarea {
+  width: 100%;
+  background: #0e0e0e;
+  border: 1px solid #333;
+  padding: 10px 14px;
+  border-radius: 12px;
+  color: var(--text-main);
+  transition: .2s;
+}
+
+.wh-form-input:focus,
+.wh-form-textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-glow);
+}
+
+.wh-form-textarea {
+  min-height: 120px;
+}
+
+.wh-form-footer {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.phone-flex {
+  display: flex;
+  gap: 10px;
+}
+
+/* -------------------------------------------------
+   9. FOOTER
+------------------------------------------------- */
+footer {
+  padding: 40px 0;
+  border-top: 1px solid var(--border-soft);
+}
+
+.wh-footer-logo {
+  height: 42px;
+  filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
+}
+
+.wh-footer-links a {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+.wh-footer-links a:hover {
+  color: var(--accent);
+}
+
+/* -------------------------------------------------
+   10. COOKIE BANNER
+------------------------------------------------- */
+.wh-cookie-banner {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10,10,10,.88);
+  border: 1px solid #303030;
+  padding: 8px 14px;
+  font-size: 12px;
+  border-radius: 999px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wh-cookie-btn {
+  background: #111;
+  border: 1px solid #3a3a3a;
+  border-radius: 999px;
+  padding: 2px 10px;
+  opacity: .7;
+  transition: .2s;
+}
+
+.wh-cookie-btn:hover {
+  opacity: 1;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* -------------------------------------------------
+   11. ADAPTIVE
+------------------------------------------------- */
+@media (max-width: 768px) {
+  .wh-hero-row {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .wh-hero-dog-wrapper {
+    margin: 0 auto;
+  }
+
+  .phone-flex {
+    flex-direction: column;
   }
 }
