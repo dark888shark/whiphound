@@ -1,15 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-
-  <!-- Кодировка -->
-  <meta charset="UTF-8">
-
-  <!-- Шрифты -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+    <!-- SEO.-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -18,339 +13,182 @@
   })(window,document,'script','dataLayer','GTM-PHHDGGNG');</script>
   <!-- End Google Tag Manager -->
 
-  <!-- Иконка сайта -->
-  <link rel="icon" type="image/png" href="img/favicon.png">
+    <title>Whiphound – намордники из Британии</title>
 
-  <!-- Адаптив -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Описание страницы — важно для поисковиков -->
+    <meta name="description" content="Whiphound — английские беговые намордники для борзых: уиппеты, салюки, грейхаунды. Поставки из Британии.">
 
-  <!-- SEO -->
-  <title>Whiphound</title>
-  <meta name="description" content="Whiphound — английские намордники для борзых: уиппет, салюки, грейхаунд, левретка. Лёгкие беговые и анатомические модели, поставки из Британии, помощь в подборе.">
-  <meta name="theme-color" content="#111111">
+    <!-- Подключение CSS файла -->
+    <link rel="stylesheet" href="style.css">
 
-  <!-- Основной стиль -->
-  <link rel="stylesheet" href="css/style.css">
-
-  <!-- Bootstrap (исправлено, одна строка, чистая) -->
-  <link 
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
-    rel="stylesheet"
-    crossorigin="anonymous"
-  >
-
+    <!-- Подключение красивых шрифтов -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-
-  <!-- Google Tag Manager (noscript) -->
+  
+ <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PHHDGGNG"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-    <header class="wh-header">
-    <div class="wh-container d-flex flex-column flex-md-row justify-content-between align-items-start">
-      <div class="wh-logo">
-        <img src="img/logo-whiphound.png" alt="Логотип Whiphound" class="wh-logo__img" />
-        <span class="wh-logo__text">Whiphound</span>
-      </div>
+<!-- ============================================================
+     ШАПКА САЙТА – НАВИГАЦИЯ
+     ============================================================ -->
+<header class="header">
+    <div class="container header-inner">
 
-      <nav class="wh-nav">
-        <a href="#about">О проекте</a>
-        <a href="#gallery">Фотогалерея</a>
-        <a href="#creative">Наше творчество</a>
-        <a href="#how-to-measure">Как измерить намордник</a>
-        <a href="#contact">Контакты</a>
-      </nav>
+        <!-- Логотип -->
+        <img src="img/logo.png" alt="Whiphound логотип" class="logo">
+
+        <!-- Меню навигации -->
+        <nav class="nav">
+            <a href="#about">О проекте</a>
+            <a href="#gallery">Галерея</a>
+            <a href="#measure">Размеры</a>
+            <a href="#contact">Контакты</a>
+        </nav>
     </div>
-  </header>
+</header>
 
-  <!-- =========================
-       HERO SECTION
-       ========================= -->
-  <main>
-    <section class="wh-hero">
-      <div class="wh-container wh-hero-row">
-        <div class="wh-hero-text">
-          <h1 class="wh-hero-title">Whiphound</h1>
-          <p class="wh-hero-subtitle">
+<!-- ============================================================
+     HERO – главный экран с борзой и кнопкой
+     ============================================================ -->
+<section class="hero">
+
+    <!-- Левый текстовый блок -->
+    <div class="hero-left">
+        <h1 class="hero-title">Whiphound</h1>
+
+        <p class="hero-subtitle">
             Качественные намордники для борзых напрямую из Британии.
-          </p>
+        </p>
 
-          <div class="wh-hero-actions">
-            <a href="https://t.me/your_telegram" target="_blank" class="wh-btn wh-btn-main">
-              <i class="bi bi-telegram"></i>
-              Написать мне
-            </a>
-
-            <a href="https://github.com/your-github" target="_blank" class="wh-btn wh-btn-outline">
-              <i class="bi bi-github"></i>
-              GitHub
-            </a>
-
-           <a href="https://vk.com/your_vk" target="_blank" class="wh-btn wh-btn-outline">
-  <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-    <path d="M12.004 0C5.376 0 0 5.373 0 12c0 6.628 5.376 12 12.004 12C18.63 24 24 18.628 24 12c0-6.627-5.37-12-11.996-12zm5.568 17.07h-1.637c-.61 0-.796-.497-1.887-1.57-0.953-.936-1.37-.983-1.603-.983-.33 0-.424.09-.424.526v1.358c0 .383-.123.569-.952.569-1.432 0-3.019-.87-4.139-2.401-1.686-2.27-2.137-3.968-2.137-4.294 0-.193.09-.38.48-.38h1.636c.394 0 .54.186.688.56.744 2.015 1.982 3.78 2.49 3.78.195 0 .29-.09.29-.559V10.44c-.062-1.009-.588-1.094-.588-1.446 0-.168.135-.333.35-.333h2.566c.3 0 .412.15.412.509v3.07c0 .288.127.38.207.38.197 0 .355-.092.708-.466 1.089-1.185 1.897-3.075 1.897-3.075.116-.273.262-.395.57-.395h1.636c.382 0 .458.186.382.413-.157.443-1.67 3.079-1.67 3.079-.13.24-.183.36 0 .63.13.18.541.533.83.859.517.582.91 1.07 1.017 1.406.117.36-.088.54-.498.54z"/>
-  </svg>
-  VK
-</a>
-
-            <a href="https://t.me/your_channel" target="_blank" class="wh-btn wh-btn-outline">
-              <i class="bi bi-broadcast"></i>
-              Telegram-канал
-            </a>
-          </div>
-        </div>
-
-        <div class="wh-hero-visual">
-          <div class="wh-hero-dog-wrapper">
-            <div class="wh-hero-dog-glow"></div>
-            <img src="img/whiphound-dog.png" class="wh-hero-dog" alt="Борзая Whiphound" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- =========================
-         ABOUT SECTION
-         ========================= -->
-    <section id="about">
-      <div class="wh-container">
-        <h2 class="wh-section-title">О проекте</h2>
-
-        <div class="wh-card">
-          <p>Меня зовут Наталь...</p>
-          <p>Делаю поставки...</p>
-          <p>Развитие Whiphound...</p>
-          <p class="wh-card-quote">
-            Главное — качественные намордники для борзых, которых в России почти нет.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- =========================
-         GALLERY / CAROUSEL
-         ========================= -->
-    <section id="gallery">
-      <div class="wh-container">
-        <h2 class="wh-section-title">Фотогалерея</h2>
-        <p class="wh-section-subtitle">Наши модели и истории Whiphound</p>
-
-        <div class="wh-gallery-wrapper">
-          <div id="whCarousel" class="carousel slide wh-carousel" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-              <button type="button" data-bs-target="#whCarousel" data-bs-slide-to="0" class="active"></button>
-              <button type="button" data-bs-target="#whCarousel" data-bs-slide-to="1"></button>
-              <button type="button" data-bs-target="#whCarousel" data-bs-slide-to="2"></button>
-            </div>
-
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="img/gallery-1.jpg" class="d-block w-100" />
-              </div>
-              <div class="carousel-item">
-                <img src="img/gallery-2.jpg" class="d-block w-100" />
-              </div>
-              <div class="carousel-item">
-                <img src="img/gallery-3.jpg" class="d-block w-100" />
-              </div>
-            </div>
-
-            <button class="carousel-control-prev" data-bs-target="#whCarousel" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" data-bs-target="#whCarousel" data-bs-slide="next">
-              <span class="carousel-control-next-icon"></span>
-            </button>
-          </div>
-
-          <p class="wh-gallery-caption">Актуальные фото — в Telegram.</p>
-        </div>
-
-        <div class="wh-middle-actions">
-          <a href="#creative" class="wh-btn wh-btn-outline">Наше творчество</a>
-          <a href="#how-to-measure" class="wh-btn wh-btn-outline">Как измерить намордник</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- =========================
-         CREATIVE BLOCK
-         ========================= -->
-    <section id="creative">
-      <div class="wh-container">
-        <h2 class="wh-section-title">Наше творчество</h2>
-        <div class="wh-card">
-          <p>Тут могут быть истории и визуалы Whiphound...</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- =========================
-         MEASUREMENT BLOCK
-         ========================= -->
-    <section id="how-to-measure">
-      <div class="wh-container">
-        <h2 class="wh-section-title">Как измерить намордник</h2>
-        <div class="wh-card">
-          <p>1. Измерьте длину...</p>
-          <p>2. Измерьте окружность...</p>
-          <p>3. Добавьте запас...</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- =========================
-         CONTACT FORM
-         ========================= -->
-    <section id="contact">
-      <div class="wh-container">
-        <h2 class="wh-section-title">Связаться со мной</h2>
-
-        <div class="wh-form-wrapper">
-          <div class="wh-form-card">
-            <form id="contactForm" action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST" novalidate>
-
-              <input type="hidden" name="_subject" value="Whiphound: новое сообщение" />
-              <input type="hidden" name="_captcha" value="false" />
-
-              <div class="mb-3">
-                <label class="wh-form-label">Имя</label>
-                <input type="text" id="name" name="Имя" class="wh-form-input" required />
-                <div class="wh-input-error" data-error-for="name"></div>
-              </div>
-
-              <div class="mb-3">
-                <label class="wh-form-label">Номер телефона</label>
-                <div class="phone-flex">
-                  <select id="countryCode" name="Код страны" class="wh-form-input">
-                    <option value="+7">+7</option>
-                    <option value="+375">+375</option>
-                  </select>
-
-                  <input type="tel" id="phone" name="Телефон" class="wh-form-input" required />
-                </div>
-                <div class="wh-input-error" data-error-for="phone"></div>
-              </div>
-
-              <div class="mb-3">
-                <label class="wh-form-label">Сообщение</label>
-                <textarea id="message" name="Сообщение" class="wh-form-textarea" required></textarea>
-                <div class="wh-input-error" data-error-for="message"></div>
-              </div>
-
-              <div id="formStatus" class="form-status"></div>
-
-              <button type="submit" class="wh-btn wh-btn-main w-100">
-                <i class="bi bi-send"></i>
-                Отправить сообщение
-              </button>
-
-              <p class="wh-form-footer">
-                Нажимая кнопку, вы соглашаетесь с
-                <a href="privacy-policy.html">Политикой конфиденциальности</a> и
-                <a href="data-processing.html">Соглашением</a>.
-              </p>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-   <!-- SEO-БЛОК (скрытый, но индексируемый) -->
-  <section style="position:absolute; left:-9999px;">
-    <h2>Намордники для борзых</h2>
-    <p>
-      Whiphound — намордники для борзых пород: уиппет, салюки, грейхаунд, левретка,
-      русская псовая борзая, слюги, азавак, дирхаунд, испанская борзая. 
-      Поставки намордников напрямую из Британии: лёгкие беговые намордники, пластиковые
-      беговые модели, анатомические намордники, намордники для бега, беговой намордник, намордник для курсинга, 
-      прогулочные модели для уиппета и салюки, мягкие регулируемые намордники.
-      Доставка по России и СНГ, помощь в подборе размера под конкретную породу.
-      Купить английский намордник Whippet, Saluki, Greyhound с доставкой, 
-      оригинальные намордники whippet из Великобритании? don pare, don pare 103.
-    </p>
-
-    <ul>
-      <li>Уиппет</li>
-      <li>Левретка (Italian Greyhound)</li>
-      <li>Салюки</li>
-      <li>Грейхаунд</li>
-      <li>Русская псовая борзая</li>
-      <li>Испанская борзая (Galgo)</li>
-      <li>Слюги</li>
-      <li>Азавак</li>
-      <li>Дирхаунд</li>
-      <li>Вольфхунд / Волкодав</li>
-      <li>Басенджи</li>
-      <li>Такса</li>
-      <li>Китайская хохлатая</li>
-      <li>Джек-рассел-терьер</li>
-      <li>Цвергпинчер</li>
-      <li>Маленькие охотничьи породы</li>
-      <li>Беговой пластиковый намордник</li>
-      <li>Лёгкий сеточный намордник</li>
-      <li>Анатомический намордник для борзых</li>
-      <li>Намордник для уиппета</li>
-      <li>Намордник для больших борзых пород</li>
-      <li>Намордник на далматина</li>
-    </ul>
-
-    <p>
-      Типы намордников Whiphound: беговой пластиковый намордник для уиппета, 
-      лёгкий сеточный намордник для салюки, мягкий регулируемый намордник,
-      облегчённый спортивный намордник, пластиковый намордник для борзых,
-      выставочные модели, прогулочные сеточные намордники, анатомические модели
-      под форму головы борзых пород.
-    </p>
-  </section>
-
-  <!-- =========================
-       FOOTER
-       ========================= -->
-  <footer>
-    <div class="wh-container">
-      <div class="wh-footer-top">
-        <div class="wh-logo">
-          <img src="img/logo-whiphound.png" class="wh-footer-logo" />
-          <span class="wh-logo__text">Whiphound</span>
-        </div>
-
-        <div class="wh-footer-links">
-          <a href="privacy-policy.html" target="_blank">Политика</a>
-          <a href="data-processing.html" target="_blank">Соглашение</a>
-        </div>
-      </div>
-
-      <div class="wh-footer-bottom">
-        <span>© 2025 Whiphound</span>
-        <span>Качественные намордники из Британии</span>
-      </div>
+        <a href="https://t.me/your_telegram"
+           target="_blank"
+           class="btn btn-main">
+            Написать мне
+        </a>
     </div>
-  </footer>
 
-  <!-- =========================
-       COOKIES BANNER
-       ========================= -->
-  <div class="wh-cookie-banner" id="cookieBanner" style="display: none;">
-    На сайте используются cookies.
-    <button id="cookieAcceptBtn" class="wh-cookie-btn">Ок</button>
-  </div>
+    <!-- Правый блок с изображением -->
+    <div class="hero-right">
+        <img src="img/hero-dog.png" alt="Борзая в наморднике" class="hero-dog">
+    </div>
 
-  <!-- Bootstrap JS -->
-  <script 
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
-  </script>
+</section>
 
-  <!-- Подключение внешнего JS -->
-  <script src="js/main.js"></script>
+
+<!-- ============================================================
+     БЛОК "О ПРОЕКТЕ"
+     ============================================================ -->
+<section id="about" class="section">
+    <h2 class="section-title">О проекте</h2>
+
+    <div class="card">
+        <p>
+            Меня зовут Наталь. С 2021 года я занимаюсь закупками намордников из Британии...
+        </p>
+        <p>
+            Начинала с маленьких совместных закупок, сейчас строю бренд Whiphound...
+        </p>
+        <p class="quote">
+            Главное — качественные намордники для борзых, которых в России почти нет.
+        </p>
+    </div>
+</section>
+
+<!-- ============================================================
+     ГАЛЕРЕЯ (СЛАЙДЕР)
+     ============================================================ -->
+<section id="gallery" class="section">
+    <h2 class="section-title">Фотогалерея</h2>
+
+    <div class="carousel">
+        <button class="carousel-btn prev">←</button>
+
+        <div class="carousel-track">
+            <img src="img/gallery-1.jpg" class="carousel-img">
+            <img src="img/gallery-2.jpg" class="carousel-img">
+            <img src="img/gallery-3.jpg" class="carousel-img">
+        </div>
+
+        <button class="carousel-btn next">→</button>
+    </div>
+
+    <p class="gallery-note">Актуальные фотографии — в Telegram-канале</p>
+</section>
+
+
+<!-- ============================================================
+     КНОПКИ: Цвета и модели / Как сделать замеры / Наше творчество
+     ============================================================ -->
+<section id="measure" class="section">
+    <div class="button-row">
+
+        <a href="#" class="btn btn-outline">Цвета и модели</a>
+        <a href="#" class="btn btn-outline">Как сделать замеры</a>
+        <a href="#" class="btn btn-outline">Наше творчество</a>
+
+    </div>
+</section>
+
+
+<!-- ============================================================
+     ФОРМА СВЯЗИ
+     ============================================================ -->
+<section id="contact" class="section">
+    <h2 class="section-title">Связаться со мной</h2>
+
+    <form id="contactForm" action="https://formsubmit.co/YOUR_EMAIL" method="POST" class="form">
+
+        <!-- скрытые параметры формы для сервиса FormSubmit -->
+        <input type="hidden" name="_captcha" value="false">
+
+        <label>Имя</label>
+        <input type="text" name="Имя" required>
+
+        <label>Номер телефона</label>
+        <div class="phone-row">
+            <select name="Код страны">
+                <option value="+7">+7</option>
+                <option value="+375">+375</option>
+            </select>
+            <input type="tel" name="Телефон" required>
+        </div>
+
+        <label>Сообщение</label>
+        <textarea name="Сообщение" required></textarea>
+
+        <button type="submit" class="btn btn-main">Отправить сообщение</button>
+
+        <p class="form-note">
+            Нажимая кнопку, вы соглашаетесь с
+            <a href="privacy-policy.html">Политикой конфиденциальности</a> и
+            <a href="data-processing.html">Соглашением на обработку данных</a>.
+        </p>
+    </form>
+</section>
+
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+    <p>© 2025 Whiphound</p>
+</footer>
+
+
+<!-- ============================================================
+     COOKIE-БАННЕР
+     ============================================================ -->
+<div id="cookieBanner" class="cookie-banner">
+    Этот сайт использует cookies.
+    <button id="cookieAccept" class="btn btn-main small">Принять</button>
+</div>
+
+
+<!-- Подключаем JS -->
+<script src="script.js"></script>
 
 </body>
 </html>
-
-
-
-
-
-
