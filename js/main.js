@@ -1,158 +1,115 @@
-/**
- * main.js
- * Здесь собран "расширенный, но понятный" JavaScript:
- * 1) Карусель галереи
- * 2) Плавный скролл по якорям меню
- * 3) Валидация формы и сообщение о статусе
- * 4) Куки-баннер (сохранение согласия в localStorage)
- */
+// Год в футере
+const yearSpan = document.getElementById("year");
+if (yearSpan) {
+  yearSpan.textContent = String(new Date().getFullYear());
+}
 
-/* ============================
-   1. КАРУСЕЛЬ ГАЛЕРЕИ
-   ============================ */
+// Бургер-меню
+const burger = document.getElementById("navBurger");
+const navLinks = document.getElementById("navLinks");
 
-(function setupGalleryCarousel() {
-  const items = Array.from(document.querySelectorAll(".gallery-item"));
-  const prevBtn = document.querySelector(".gallery-prev");
-  const nextBtn = document.querySelector(".gallery-next");
+if (burger && navLinks) {
+  burger.addEventListener("click", () => {
+    navLinks.classList.toggle("nav__links--open");
+  });
+}
 
-  if (!items.length) return;
+// Плавный скролл по кнопкам меню
+document.querySelectorAll("[data-scroll]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const id = btn.getAttribute("data-scroll");
+    if (!id) return;
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    // закрываем меню на мобилке
+    if (navLinks && navLinks.classList.contains("nav__links--open")) {
+      navLinks.classList.remove("nav__links--open");
+    }
+  });
+});
 
-  let currentIndex = 0;
+// Фильтр галереи
+const galleryButtons = document.querySelectorAll(".chip");
+const galleryCards = document.querySelectorAll(".gallery-card");
 
-  function updateActiveSlide() {
-    items.forEach((item, index) => {
-      item.classList.toggle("active", index === currentIndex);
-    });
-  }
+galleryButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const filter = btn.getAttribute("data-filter") || "all";
 
-  function showNext() {
-    currentIndex = (currentIndex + 1) % items.length;
-    updateActiveSlide();
-  }
+    galleryButtons.forEach((b) => b.classList.remove("chip--active"));
+    btn.classList.add("chip--active");
 
-  function showPrev() {
-    currentIndex = (currentIndex - 1 + items.length) % items.length;
-    updateActiveSlide();
-  }
-
-  prevBtn?.addEventListener("click", showPrev);
-  nextBtn?.addEventListener("click", showNext);
-
-  // Автопрокрутка раз в 6 секунд (можно отключить)
-  setInterval(showNext, 6000);
-})();
-
-/* ============================
-   2. ПЛАВНЫЙ СКРОЛЛ ДЛЯ МЕНЮ
-   ============================ */
-
-(function setupSmoothScroll() {
-  const links = document.querySelectorAll('a[href^="#"]');
-
-  links.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      const targetId = link.getAttribute("href");
-      if (!targetId || targetId === "#") return;
-
-      const targetElement = document.querySelector(targetId);
-      if (!targetElement) return;
-
-      e.preventDefault();
-
-      const headerOffset = 70; // высота фиксированной шапки
-      const rect = targetElement.getBoundingClientRect();
-      const offsetTop = window.scrollY + rect.top - headerOffset;
-
-      window.scrollTo({
-        top: offsetTop,
-        behavior: "smooth",
-      });
+    galleryCards.forEach((card) => {
+      const category = card.getAttribute("data-category");
+      if (!category) return;
+      if (filter === "all" || category === filter) {
+        card.style.display = "";
+      } else {
+        card.style.display = "none";
+      }
     });
   });
-})();
+});
 
-/* ============================
-   3. ВАЛИДАЦИЯ ФОРМЫ
-   ============================ */
+// Cookie banner
+const cookieBanner = document.getElementById("cookieBanner");
+const cookieAccept = document.getElementById("cookieAccept");
+const COOKIE_KEY = "whiphound_cookie_accepted";
 
-(function setupContactForm() {
-  const form = document.getElementById("contactForm");
-  if (!form) return;
-
-  const statusBox = document.getElementById("formStatus");
-
-  function setError(fieldId, message) {
-    const errorBox = document.querySelector(
-      `.input-error[data-error-for="${fieldId}"]`
-    );
-    if (errorBox) errorBox.textContent = message || "";
+if (cookieBanner) {
+  try {
+    const accepted = localStorage.getItem(COOKIE_KEY) === "true";
+    if (!accepted) {
+      cookieBanner.classList.remove("hidden");
+    }
+  } catch (e) {
+    // localStorage может быть недоступен — тихо игнорируем
   }
+}
 
-  form.addEventListener("submit", function (e) {
-    // Базовая проверка полей
-    const name = form.querySelector("#name");
-    const phone = form.querySelector("#phone");
-    const message = form.querySelector("#message");
+if (cookieAccept && cookieBanner) {
+  cookieAccept.addEventListener("click", () => {
+    cookieBanner.classList.add("hidden");
+    try {
+      localStorage.setItem(COOKIE_KEY, "true");
+    } catch (e) {}
+  });
+}
 
-    let hasError = false;
-    setError("name", "");
-    setError("phone", "");
-    setError("message", "");
+// Обработка формы
+const contactForm = document.getElementById("contactForm");
+const formToast = document.getElementById("formToast");
 
-    if (!name.value.trim()) {
-      setError("name", "Введите ваше имя");
-      hasError = true;
-    }
-    if (!phone.value.trim()) {
-      setError("phone", "Укажите номер телефона");
-      hasError = true;
-    }
-    if (!message.value.trim()) {
-      setError("message", "Напишите хотя бы пару слов 🙂");
-      hasError = true;
-    }
+if (contactForm && formToast) {
+  contactForm.addEventListener("submit", (event) => {
+    event.preventDefault();
 
-    if (hasError) {
-      e.preventDefault();
-      statusBox.textContent = "Проверьте, пожалуйста, выделенные поля.";
-      statusBox.style.color = "#ff6b6b";
+    const formData = new FormData(contactForm);
+    const name = (formData.get("name") || "").toString().trim();
+    const phone = (formData.get("phone") || "").toString().trim();
+    const message = (formData.get("message") || "").toString().trim();
+
+    if (!name || !phone || !message) {
+      showFormToast(
+        "Пожалуйста, заполните обязательные поля.",
+        true
+      );
       return;
     }
 
-    // Если всё ОК — даём пользователю понятный отклик.
-    // Здесь можно либо:
-    // 1) дать форме отправиться как обычно (formsubmit сам всё сделает),
-    // 2) либо перехватить и отправить через fetch.
-    //
-    // Для простоты учебного задания оставим вариант №1.
-
-    statusBox.textContent = "Отправляем сообщение...";
-    statusBox.style.color = "#b3b3b3";
-    // дальше форма отправится стандартным способом (e.preventDefault мы НЕ вызываем)
+    // Здесь могла бы быть отправка на сервер / в бота.
+    // Для учебного статика — просто "успех".
+    contactForm.reset();
+    showFormToast(
+      "Спасибо за заявку! Я свяжусь с вами в ближайшее время.",
+      false
+    );
   });
-})();
 
-/* ============================
-   4. COOKIES-БАННЕР
-   ============================ */
-
-(function setupCookieBanner() {
-  const banner = document.getElementById("cookieBanner");
-  const acceptBtn = document.getElementById("cookieAcceptBtn");
-  if (!banner || !acceptBtn) return;
-
-  const STORAGE_KEY = "whiphound_cookies_accepted";
-
-  // Если пользователь уже соглашался — баннер не показываем
-  const alreadyAccepted = localStorage.getItem(STORAGE_KEY);
-  if (alreadyAccepted === "yes") {
-    banner.classList.add("hidden");
-    return;
+  function showFormToast(text, isError) {
+    formToast.textContent = text;
+    formToast.style.color = isError ? "var(--danger)" : "var(--primary)";
   }
-
-  acceptBtn.addEventListener("click", () => {
-    localStorage.setItem(STORAGE_KEY, "yes");
-    banner.classList.add("hidden");
-  });
-})();
+}
