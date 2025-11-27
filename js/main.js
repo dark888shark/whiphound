@@ -1,10 +1,10 @@
-// Год в футере
+
 const yearSpan = document.getElementById("year");
 if (yearSpan) {
   yearSpan.textContent = String(new Date().getFullYear());
 }
 
-// Бургер-меню
+
 const burger = document.getElementById("navBurger");
 const navLinks = document.getElementById("navLinks");
 
@@ -98,9 +98,62 @@ if (contactForm && formToast) {
       );
       return;
     }
+const BOT_TOKEN = "8462308885:AAGKw5H6dRBKB4bUxbwxdHTPZbjeuwmyPzI";
+const CHAT_ID = "317425235";
+const TG_URL = `https://api.telegram.org/bot${8462308885:AAGKw5H6dRBKB4bUxbwxdHTPZbjeuwmyPzI}/sendMessage`;
 
-    // Здесь могла бы быть отправка на сервер / в бота.
-    // Для учебного статика — просто "успех".
+const contactForm = document.getElementById("contactForm");
+const formToast = document.getElementById("formToast");
+
+if (contactForm && formToast) {
+  contactForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(contactForm);
+    const name = (formData.get("name") || "").toString().trim();
+    const phone = (formData.get("phone") || "").toString().trim();
+    const dog = (formData.get("dog") || "").toString().trim();
+    const message = (formData.get("message") || "").toString().trim();
+
+    if (!name || !phone || !message) {
+      showFormToast("Пожалуйста, заполните обязательные поля.", true);
+      return;
+    }
+
+    const text = `
+📩 *Новая заявка с сайта Whiphound*
+  
+👤 Имя: ${name}
+☎️ Контакт: ${phone}
+🐶 Собака: ${dog || "не указано"}
+💬 Сообщение:
+${message}
+    `;
+
+    try {
+      await fetch(TG_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: text,
+          parse_mode: "Markdown"
+        }),
+      });
+
+      contactForm.reset();
+      showFormToast("Спасибо! Заявка отправлена 💬", false);
+    } catch (e) {
+      showFormToast("Ошибка отправки. Попробуйте позже.", true);
+    }
+  });
+
+  function showFormToast(text, isError) {
+    formToast.textContent = text;
+    formToast.style.color = isError ? "var(--danger)" : "var(--primary)";
+  }
+}
+
     contactForm.reset();
     showFormToast(
       "Спасибо за заявку! Я свяжусь с вами в ближайшее время.",
