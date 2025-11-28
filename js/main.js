@@ -1,10 +1,10 @@
-
+// Год в футере
 const yearSpan = document.getElementById("year");
 if (yearSpan) {
   yearSpan.textContent = String(new Date().getFullYear());
 }
 
-
+// Бургер-меню
 const burger = document.getElementById("navBurger");
 const navLinks = document.getElementById("navLinks");
 
@@ -14,7 +14,7 @@ if (burger && navLinks) {
   });
 }
 
-// Плавный скролл по кнопкам меню
+// Плавный скролл
 document.querySelectorAll("[data-scroll]").forEach((btn) => {
   btn.addEventListener("click", () => {
     const id = btn.getAttribute("data-scroll");
@@ -23,7 +23,6 @@ document.querySelectorAll("[data-scroll]").forEach((btn) => {
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-    // закрываем меню на мобилке
     if (navLinks && navLinks.classList.contains("nav__links--open")) {
       navLinks.classList.remove("nav__links--open");
     }
@@ -44,11 +43,8 @@ galleryButtons.forEach((btn) => {
     galleryCards.forEach((card) => {
       const category = card.getAttribute("data-category");
       if (!category) return;
-      if (filter === "all" || category === filter) {
-        card.style.display = "";
-      } else {
-        card.style.display = "none";
-      }
+      card.style.display =
+        filter === "all" || category === filter ? "" : "none";
     });
   });
 });
@@ -61,15 +57,11 @@ const COOKIE_KEY = "whiphound_cookie_accepted";
 if (cookieBanner) {
   try {
     const accepted = localStorage.getItem(COOKIE_KEY) === "true";
-    if (!accepted) {
-      cookieBanner.classList.remove("hidden");
-    }
-  } catch (e) {
-    // localStorage может быть недоступен — тихо игнорируем
-  }
+    if (!accepted) cookieBanner.classList.remove("hidden");
+  } catch (e) {}
 }
 
-if (cookieAccept && cookieBanner) {
+if (cookieAccept) {
   cookieAccept.addEventListener("click", () => {
     cookieBanner.classList.add("hidden");
     try {
@@ -78,29 +70,13 @@ if (cookieAccept && cookieBanner) {
   });
 }
 
-// Обработка формы
-const contactForm = document.getElementById("contactForm");
-const formToast = document.getElementById("formToast");
+// ============================
+//         TELEGRAM FORM
+// ============================
 
-if (contactForm && formToast) {
-  contactForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(contactForm);
-    const name = (formData.get("name") || "").toString().trim();
-    const phone = (formData.get("phone") || "").toString().trim();
-    const message = (formData.get("message") || "").toString().trim();
-
-    if (!name || !phone || !message) {
-      showFormToast(
-        "Пожалуйста, заполните обязательные поля.",
-        true
-      );
-      return;
-    }
 const BOT_TOKEN = "8462308885:AAGKw5H6dRBKB4bUxbwxdHTPZbjeuwmyPzI";
 const CHAT_ID = "317425235";
-const TG_URL = `https://api.telegram.org/bot${8462308885:AAGKw5H6dRBKB4bUxbwxdHTPZbjeuwmyPzI}/sendMessage`;
+const TG_URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
 
 const contactForm = document.getElementById("contactForm");
 const formToast = document.getElementById("formToast");
@@ -110,10 +86,10 @@ if (contactForm && formToast) {
     event.preventDefault();
 
     const formData = new FormData(contactForm);
-    const name = (formData.get("name") || "").toString().trim();
-    const phone = (formData.get("phone") || "").toString().trim();
-    const dog = (formData.get("dog") || "").toString().trim();
-    const message = (formData.get("message") || "").toString().trim();
+    const name = formData.get("name")?.toString().trim();
+    const phone = formData.get("phone")?.toString().trim();
+    const dog = formData.get("dog")?.toString().trim();
+    const message = formData.get("message")?.toString().trim();
 
     if (!name || !phone || !message) {
       showFormToast("Пожалуйста, заполните обязательные поля.", true);
@@ -121,11 +97,12 @@ if (contactForm && formToast) {
     }
 
     const text = `
-📩 *Новая заявка с сайта Whiphound*
-  
+📩 *Новая заявка — Whiphound.ru*
+
 👤 Имя: ${name}
 ☎️ Контакт: ${phone}
 🐶 Собака: ${dog || "не указано"}
+
 💬 Сообщение:
 ${message}
     `;
@@ -137,7 +114,7 @@ ${message}
         body: JSON.stringify({
           chat_id: CHAT_ID,
           text: text,
-          parse_mode: "Markdown"
+          parse_mode: "Markdown",
         }),
       });
 
@@ -147,22 +124,9 @@ ${message}
       showFormToast("Ошибка отправки. Попробуйте позже.", true);
     }
   });
-
-  function showFormToast(text, isError) {
-    formToast.textContent = text;
-    formToast.style.color = isError ? "var(--danger)" : "var(--primary)";
-  }
 }
 
-    contactForm.reset();
-    showFormToast(
-      "Спасибо за заявку! Я свяжусь с вами в ближайшее время.",
-      false
-    );
-  });
-
-  function showFormToast(text, isError) {
-    formToast.textContent = text;
-    formToast.style.color = isError ? "var(--danger)" : "var(--primary)";
-  }
+function showFormToast(text, isError) {
+  formToast.textContent = text;
+  formToast.style.color = isError ? "var(--danger)" : "var(--accent-teal)";
 }
