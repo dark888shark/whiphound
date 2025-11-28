@@ -134,28 +134,28 @@ body {
 
 .hero {
   position: relative;
-  min-height: calc(100vh - 60px);
+  min-height: calc(32px0px + 500px);
   display: flex;
   align-items: center;
   overflow: hidden;
-  padding: 40px 0 80px;
+  padding: 20px 0 80px;
 }
 
 .hero__bg {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  pointer-events: none; /* ← ВСТАВИТЬ СЮДА */
+  pointer-events: none; 
 }
 
 
 .hero__bg img {
   position: absolute;
   right: -1%;
-  top: 50%;
+  top: 25%;
   transform: translateY(-50%);
   width: min(780px, 70vw);
-  opacity: 0.9;
+  opacity: 95%;
   object-fit: contain;
   filter: drop-shadow(0 34px 80px rgba(0, 0, 0, 0.8));
   mask-image: linear-gradient(to left, #000 0%, transparent 100%);
@@ -801,4 +801,64 @@ body {
     height: 160px;
   }
 }
+/* =========================================================
+   FIX для кнопок соцсетей — отдельный стиль, не перебивается
+   ========================================================= */
 
+.btn-social {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 10px 16px !important;
+  border-radius: 999px !important;
+  font-size: 14px !important;
+  line-height: 1 !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: var(--text-main) !important;
+  cursor: pointer !important;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
+}
+
+/* эффект свечения */
+.btn-social:hover {
+  border-color: var(--accent-teal) !important;
+  box-shadow: 0 0 16px var(--accent-teal) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* иконки внутри */
+.btn-social img {
+  width: 18px !important;
+  height: 18px !important;
+  object-fit: contain !important;
+}
+
+/* --- ФОН НЕ ЛОВИТ КЛИКИ, КНОПКИ ЛОВЯТ --- */
+
+.hero {
+  position: relative;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+}
+
+/* ВСЕ возможные фоновые слои делаем «прозрачными» для мыши */
+.hero__bg,
+.hero__bg-gradient,
+.hero__bg img,
+.hero__glow,
+.hero::before,
+.hero::after {
+  pointer-events: none !important;
+  z-index: 0;
+}
+
+/* А вот сами кнопки – наоборот, активные */
+.hero-actions a,
+.hero-actions .btn {
+  pointer-events: auto !important;
+}
