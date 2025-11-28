@@ -1,10 +1,9 @@
-// Год в футере
+
 const yearSpan = document.getElementById("year");
 if (yearSpan) {
   yearSpan.textContent = String(new Date().getFullYear());
 }
 
-// Бургер-меню
 const burger = document.getElementById("navBurger");
 const navLinks = document.getElementById("navLinks");
 
