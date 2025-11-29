@@ -857,6 +857,28 @@ body {
   z-index: 0;
 }
 
+/* ======= MOBILE FIX: логотип не наезжает на собаку ======= */
+
+@media (max-width: 768px) {
+  .hero__logo img {
+    width: 75% !important;
+    margin-left: 0 !important;
+    margin-bottom: 12px !important;
+  }
+
+  .hero__bg img {
+    width: 115% !important;
+    right: -10% !important;
+    top: 35% !important;
+    opacity: 0.8 !important;
+  }
+
+  .hero__text {
+    padding-top: 10px !important;
+  }
+}
+
+
 /* А вот сами кнопки – наоборот, активные */
 .hero-actions a,
 .hero-actions .btn {
