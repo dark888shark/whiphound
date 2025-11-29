@@ -862,4 +862,20 @@ body {
 .hero-actions .btn {
   pointer-events: auto !important;
 }
+/* ---- MOBILE FIX ---- */
+@media (max-width: 768px) {
+  .logo {
+    position: absolute;
+    top: 10px;      /* поднимает логотип вверх */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;   /* уменьшает логотип на мобиле */
+    z-index: 1000;
+  }
+
+  .hero-image {
+    margin-top: 80px;  /* чтобы собака ушла вниз, и логотип её не перекрывал */
+  }
+}
+
 
