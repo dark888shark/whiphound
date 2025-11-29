@@ -857,19 +857,46 @@ body {
   z-index: 0;
 }
 
-/* MOBILE: убираем собаку из hero, чтобы логотип не лежал поверх */
+/* ===== MOBILE: логотип сверху, собака ниже ===== */
+
 @media (max-width: 768px) {
+
+  /* Делаем фон-собаку обычным, НЕ абсолютным элементом */
+  .hero__bg {
+    position: relative !important;
+    display: block !important;
+    margin-top: 20px !important;
+  }
+
   .hero__bg img {
-    display: none !important;
+    position: static !important;   /* отменяем absolute */
+    width: 100% !important;
+    height: auto !important;
+    opacity: 0.8 !important;
+    object-fit: cover !important;
+    display: block !important;
+    margin: 0 auto !important;
   }
 
-  .hero {
-    min-height: 420px; /* чтобы блок не схлопнулся без картинки */
-  }
-
+  /* Логотип - наверху, по центру */
   .hero__logo img {
     width: 70% !important;
-    margin: 0 auto 16px auto !important;
     display: block !important;
+    margin: 0 auto 10px auto !important;
+    position: relative !important;
+    z-index: 10 !important;
+  }
+
+  /* Выравниваем текст по центру */
+  .hero__text {
+    text-align: center !important;
+    margin-top: 10px !important;
+  }
+
+  /* Отменяем overflow, чтобы ничто не резалось */
+  .hero {
+    position: relative !important;
+    overflow: visible !important;
   }
 }
+
