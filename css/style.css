@@ -857,29 +857,19 @@ body {
   z-index: 0;
 }
 
-/* ===== MOBILE HARD FIX ===== */
+/* MOBILE: убираем собаку из hero, чтобы логотип не лежал поверх */
 @media (max-width: 768px) {
-  .hero__logo img {
-    width: 60% !important;
-    margin: 0 auto !important;
-    display: block !important;
-    position: relative !important;
-    z-index: 5 !important;
-  }
-
   .hero__bg img {
-    width: 100% !important;
-    object-position: center top !important;
-    right: 0 !important;
-    top: 0 !important;
-    opacity: 0.55 !important;
-    position: absolute !important;
-    z-index: 0 !important;
+    display: none !important;
   }
 
   .hero {
-    position: relative !important;
-    overflow: hidden !important;
+    min-height: 420px; /* чтобы блок не схлопнулся без картинки */
+  }
+
+  .hero__logo img {
+    width: 70% !important;
+    margin: 0 auto 16px auto !important;
+    display: block !important;
   }
 }
-
