@@ -878,19 +878,22 @@ body {
 }
 
 /* ----- Мобильная версия ----- */
+/* Мобильная версия */
 @media (max-width: 768px) {
-  .hero-container {
-    flex-direction: column; /* ставим один под другим */
+  .hero {
+    display: flex;
+    flex-direction: column;
   }
 
-  .logo {
-    order: 1;  /* ЛОГОТИП ПЕРВЫЙ */
+  .hero__content {
+    order: 1;   /* ЛОГОТИП ПЕРВЫМ */
   }
 
-  .hero-dog {
-    order: 2;  /* борзая после лого */
+  .hero__bg {
+    order: 2;   /* БОРЗАЯ ПОСЛЕ */
   }
 }
+
 
 
 
