@@ -862,15 +862,36 @@ body {
 .hero-actions .btn {
   pointer-events: auto !important;
 }
+.hero-container {
+  display: flex;
+  flex-direction: row; /* Десктоп – как было */
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  order: 1;
+}
+
+.hero-dog {
+  order: 2;
+}
+
+/* ----- Мобильная версия ----- */
 @media (max-width: 768px) {
+  .hero-container {
+    flex-direction: column; /* ставим один под другим */
+  }
+
   .logo {
-    position: absolute;
-    top: 10px;      /* подними выше */
-    left: 20px;     /* можно подвинуть влево */
-    width: 120px;   /* уменьшить на мобиле */
-    z-index: 10;    /* чтобы поверх всего */
+    order: 1;  /* ЛОГОТИП ПЕРВЫЙ */
+  }
+
+  .hero-dog {
+    order: 2;  /* борзая после лого */
   }
 }
+
 
 
 
