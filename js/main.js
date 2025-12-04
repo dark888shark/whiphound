@@ -73,8 +73,8 @@ if (cookieAccept) {
 //         TELEGRAM FORM
 // ============================
 
-const BOT_TOKEN = "8462308885:AAGKw5H6dRBKB4bUxbwxdHTPZbjeuwmyPzI";
-const CHAT_ID = "317425235";
+const BOT_TOKEN = "явки пароли";
+const CHAT_ID = "явки пароли";
 const TG_URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
 
 const contactForm = document.getElementById("contactForm");
